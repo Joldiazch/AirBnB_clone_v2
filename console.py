@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This is the console for AirBnB"""
 import cmd
+import re
 from models import storage
 from datetime import datetime
 from models.base_model import BaseModel
@@ -42,12 +43,24 @@ class HBNBCommand(cmd.Cmd):
             if not line:
                 raise SyntaxError()
             my_list = line.split(" ")
-            obj = eval("{}()".format(my_list[0]))
+            name_class = my_list[0]
+            attrs = my_list[1:]
+
+            obj = eval("{}()".format(name_class))
+
+            for att in attrs:
+                key, value = att.split("=")
+                if re.match('^"\w*"$', value):
+                    try:
+                        setattr(obj, key, value.replace('_', ' ')[1:-1])
+                    except:
+                        pass
             obj.save()
             print("{}".format(obj.id))
+
         except SyntaxError:
             print("** class name missing **")
-        except NameError:
+        except:
             print("** class doesn't exist **")
 
     def do_show(self, line):
