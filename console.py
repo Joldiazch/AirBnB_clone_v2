@@ -43,16 +43,16 @@ class HBNBCommand(cmd.Cmd):
             if not line:
                 raise SyntaxError()
             my_list = line.split(" ")
-            name_class = my_list[0]
+            name_c = my_list[0]
             attrs = my_list[1:]
 
-            obj = eval("{}()".format(name_class))
+            obj = eval("{}()".format(name_c))
 
             for att in attrs:
                 key, value = att.split("=")
-                if re.match('^"\w*"$', value):
+                if re.match('"?\w*.\w*"?', value) and key in dir(eval(name_c)):
                     try:
-                        setattr(obj, key, value.replace('_', ' ')[1:-1])
+                        setattr(obj, key, eval(value.replace('_', ' ')))
                     except:
                         pass
             obj.save()
