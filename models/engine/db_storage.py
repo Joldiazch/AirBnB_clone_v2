@@ -50,3 +50,29 @@ class DBStorage:
             for instance in self.__session.query(cls).all:
                 key = cls.__name__ + "." + instance.id
                 a_dict[key] = {col: eval('instance.' + col) for col in cols}
+        return a_dict
+    
+    def new(self, obj):
+        """ adds object to the current database session """
+        if obj:
+            class_name = obj.__class__.__name__
+            new_data = eval(class_name)(
+                name='ed',
+                fullname='Ed Jones',
+                nickname='edsnickname')
+            
+            self.__session.add(new_data)
+
+    def save(self):
+        """ commit all changes of the current database session """
+        self.__session.commit()
+
+    def delete(self, obj=None):
+        """ delete from the current database session obj """
+        if obj:
+            cl = type(obj).__name__
+            key = obj.id
+            for instance in session.query(cl).get(id):
+                self.__session.delete(instance)
+            self.save()
+    
