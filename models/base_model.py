@@ -5,7 +5,6 @@ import models
 from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, DateTime
-from models.storage import storage
 
 Base = declarative_base()
 
@@ -76,4 +75,4 @@ class BaseModel:
         """
         delete the current instance from the storage (models.storage)
         """
-        del(storage)
+        del(model.storage)

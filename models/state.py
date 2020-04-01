@@ -2,8 +2,8 @@
 """This is the state class"""
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer, String, DateTime
-from models import storage
 from models.city import City
+from sqlalchemy.orm import relationship, backref
 
 
 class State(BaseModel):
@@ -21,5 +21,5 @@ class State(BaseModel):
 
     @property
     def cities(self):
-        all_cities = storage.all(City)
+        all_cities = model.storage.all(City)
         return [city for city in all_cities if city['state_id'] == self.id]

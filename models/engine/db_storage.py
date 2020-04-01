@@ -1,13 +1,12 @@
 #!usr/bin/python3
 """ DataBase storage """
 import sys
-from relationship_state import Base, State
 from sqlalchemy import (create_engine)
 from sqlalchemy.orm import sessionmaker, scoped_session
 import os
 
 """ import Clases  """
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from models.user import User
 from models.state import State
 from models.city import City
@@ -38,7 +37,7 @@ class DBStorage:
                 passw,
                 datab),
             pool_pre_ping=True)
-        if HBNB_ENV == 'test':
+        if dev == 'test':
             Base.metadata.drop_all(bind=self.__engine, tables=[username.__table__])
 
     def all(self, cls=None):
@@ -46,7 +45,7 @@ class DBStorage:
         a_dict = {}
         classes = [User, State, City, Amenity, Place, Review]
 
-        if cls=None:
+        if cls == None:
             for cl in classes:
                 cols = cl.__table__.columns.keys()
                 for instance in self.__session.query(cl.__name__).all:
@@ -83,4 +82,3 @@ class DBStorage:
         Session = scoped_session(
             sessionmaker(expire_on_commit=False, bind=self.__engine))
         self.__session = Session()
-
