@@ -5,6 +5,9 @@ from sqlalchemy import Column, Integer, String, DateTime
 from models.city import City
 from sqlalchemy.orm import relationship, backref
 import models
+import os
+
+type_storage = os.getenv('HBNB_TYPE_STORAGE')
 
 
 class State(BaseModel, Base):
@@ -23,5 +26,9 @@ class State(BaseModel, Base):
     @property
     def cities(self):
         """ cities for a State instance """
-        all_cities = models.storage.all(City)
-        return [city for city in all_cities if city['state_id'] == self.id]
+
+        if type_storage == 'db':
+            return self.cities
+        else:
+            all_cities = models.storage.all(City)
+            return [city for city in all_cities if city['state_id'] == self.id]
