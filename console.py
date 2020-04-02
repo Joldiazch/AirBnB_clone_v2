@@ -50,14 +50,8 @@ class HBNBCommand(cmd.Cmd):
 
             for att in attrs:
                 key, value = att.split("=")
-                if re.match(
-                        r'"?\w*.\w*"?',
-                        value) and key in dir(
-                        eval(name_c)):
-                    try:
-                        setattr(obj, key, eval(value.replace('_', ' ')))
-                    except BaseException:
-                        pass
+                if re.match(r'"?\w*.\w*"?', value) and key in dir(obj):
+                    setattr(obj, key, eval(value.replace('_', ' ')))
             obj.save()
             print("{}".format(obj.id))
 
