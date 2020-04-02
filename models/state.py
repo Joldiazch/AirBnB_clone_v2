@@ -4,6 +4,7 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer, String, DateTime
 from models.city import City
 from sqlalchemy.orm import relationship, backref
+import models
 
 
 class State(BaseModel, Base):
@@ -22,5 +23,5 @@ class State(BaseModel, Base):
     @property
     def cities(self):
         """ cities for a State instance """
-        all_cities = model.storage.all(City)
+        all_cities = models.storage.all(City)
         return [city for city in all_cities if city['state_id'] == self.id]
