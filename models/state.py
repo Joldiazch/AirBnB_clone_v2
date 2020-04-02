@@ -9,6 +9,8 @@ import os
 
 
 type_storage = os.getenv('HBNB_TYPE_STORAGE')
+
+
 class State(BaseModel, Base):
     """This is the class for State
     Attributes:
