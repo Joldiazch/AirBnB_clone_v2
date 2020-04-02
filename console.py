@@ -63,7 +63,7 @@ class HBNBCommand(cmd.Cmd):
 
         except SyntaxError:
             print("** class name missing **")
-        except ValueError:
+        except:
             print("** class doesn't exist **")
 
     def do_show(self, line):
