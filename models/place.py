@@ -3,6 +3,10 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy import Column, Integer, String, ForeignKey, Float
+import os
+
+
+type_storage = os.getenv('HBNB_TYPE_STORAGE')
 
 
 class Place(BaseModel, Base):
@@ -31,13 +35,15 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, default=0, nullable=False)
     latitude = Column(Float)
     longitude = Column(Float)
-    reviews = relationship(
-        "Review",
-        backref='place',
-        cascade="all, delete"
-    )
     amenity_ids = []
-
-    @property
-    def cities(self):
-        return self.reviews
+    
+    if type_storage == 'db':
+        reviews = relationship(
+            "Review",
+            backref='place',
+            cascade="all, delete"
+        )
+    else:
+        @property
+        def cities(self):
+            return self.reviews
