@@ -1,18 +1,18 @@
 #!usr/bin/python3
 """ DataBase storage """
+from models.review import Review
+from models.place import Place
+from models.amenity import Amenity
+from models.city import City
+from models.state import State
+from models.user import User
+from models.base_model import BaseModel, Base
 import sys
 from sqlalchemy import (create_engine)
 from sqlalchemy.orm import sessionmaker, scoped_session
 import os
 
 """ import Clases  """
-from models.base_model import BaseModel, Base
-from models.user import User
-from models.state import State
-from models.city import City
-from models.amenity import Amenity
-from models.place import Place
-from models.review import Review
 
 """ load env variables """
 dev = os.getenv('HBNB_ENV')
@@ -29,6 +29,7 @@ class DBStorage:
     """
     __engine = None
     __session = None
+
     def __init__(self):
         """ Constructor """
         self.__engine = create_engine(
@@ -38,14 +39,16 @@ class DBStorage:
                 datab),
             pool_pre_ping=True)
         if dev == 'test':
-            Base.metadata.drop_all(bind=self.__engine, tables=[username.__table__])
+            Base.metadata.drop_all(
+                bind=self.__engine, tables=[
+                    username.__table__])
 
     def all(self, cls=None):
         """ query on the current database session """
         a_dict = {}
         classes = [State, City]
 
-        if cls == None:
+        if cls is None:
             for cl in classes:
                 cols = cl.__table__.columns.keys()
                 for instance in self.__session.query(cl).all():
