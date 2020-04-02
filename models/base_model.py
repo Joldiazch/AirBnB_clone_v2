@@ -76,4 +76,4 @@ class BaseModel:
         """
         delete the current instance from the storage (models.storage)
         """
-        del(model.storage)
+        del(models.storage)
