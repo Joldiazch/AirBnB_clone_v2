@@ -38,9 +38,7 @@ class DBStorage:
                 datab),
             pool_pre_ping=True)
         if dev == 'test':
-            Base.metadata.drop_all(
-                bind=self.__engine, tables=[
-                    username.__table__])
+            Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """ query on the current database session """
@@ -60,9 +58,9 @@ class DBStorage:
 
     def new(self, obj):
         """ adds object to the current database session """
-
-        self.__session.add(obj)
-        self.save()
+        if obj:
+            self.__session.add(obj)
+            self.save()
 
     def save(self):
         """ commit all changes of the current database session """
@@ -79,6 +77,7 @@ class DBStorage:
             Creates the current database session
         """
         Base.metadata.create_all(self.__engine)
-        Session = scoped_session(
-            sessionmaker(expire_on_commit=False, bind=self.__engine))
+        Session = scoped_session(sessionmaker(
+            expire_on_commit=False,
+            bind=self.__engine))
         self.__session = Session()
