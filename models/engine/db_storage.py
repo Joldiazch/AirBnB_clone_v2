@@ -12,7 +12,6 @@ from sqlalchemy import (create_engine)
 from sqlalchemy.orm import sessionmaker, scoped_session
 import os
 
-""" import Clases  """
 
 """ load env variables """
 dev = os.getenv('HBNB_ENV')

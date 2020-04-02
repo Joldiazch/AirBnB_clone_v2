@@ -21,5 +21,6 @@ class State(BaseModel, Base):
 
     @property
     def cities(self):
+        """ cities for a State instance """
         all_cities = model.storage.all(City)
         return [city for city in all_cities if city['state_id'] == self.id]
