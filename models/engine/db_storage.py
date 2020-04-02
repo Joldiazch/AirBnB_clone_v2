@@ -49,14 +49,14 @@ class DBStorage:
 
         if cls is None:
             for cl in classes:
-                cols = cl.__table__.columns.keys()
                 for instance in self.__session.query(cl).all():
                     key = cl.__name__ + "." + instance.id
+                    del(instance.__dict__['_sa_instance_state'])
                     a_dict[key] = instance
         else:
-            cols = cls.__table__.columns.keys()
             for instance in self.__session.query(cls).all:
                 key = cls.__name__ + "." + instance.id
+                del(instance.__dict__['_sa_instance_state'])
                 a_dict[key] = instance
         return a_dict
 
