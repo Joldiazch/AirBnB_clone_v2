@@ -6,7 +6,7 @@ from models.city import City
 from sqlalchemy.orm import relationship, backref
 
 
-class State(BaseModel):
+class State(BaseModel, Base):
     """This is the class for State
     Attributes:
         name: input name

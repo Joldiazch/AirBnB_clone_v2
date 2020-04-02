@@ -43,19 +43,19 @@ class DBStorage:
     def all(self, cls=None):
         """ query on the current database session """
         a_dict = {}
-        classes = [User, State, City, Amenity, Place, Review]
+        classes = [State, City]
 
         if cls == None:
             for cl in classes:
                 cols = cl.__table__.columns.keys()
-                for instance in self.__session.query(cl.__name__).all:
+                for instance in self.__session.query(cl).all():
                     key = cl.__name__ + "." + instance.id
-                    a_dict[key] = {col: eval('instance.' + col) for col in cols}
+                    a_dict[key] = instance
         else:
             cols = cls.__table__.columns.keys()
             for instance in self.__session.query(cls).all:
                 key = cls.__name__ + "." + instance.id
-                a_dict[key] = {col: eval('instance.' + col) for col in cols}
+                a_dict[key] = instance
         return a_dict
 
     def new(self, obj):
