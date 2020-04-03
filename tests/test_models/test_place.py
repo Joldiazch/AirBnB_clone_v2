@@ -49,7 +49,7 @@ class TestPlace(unittest.TestCase):
         self.assertIsNotNone(Place.__doc__)
 
     def test_attributes_Place(self):
-        """chekcing if amenity have attributes"""
+        """checking if amenity have attributes"""
         self.assertTrue('id' in self.place.__dict__)
         self.assertTrue('created_at' in self.place.__dict__)
         self.assertTrue('updated_at' in self.place.__dict__)
@@ -83,6 +83,9 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(type(self.place.longitude), float)
         self.assertEqual(type(self.place.amenity_ids), list)
 
+    @unittest.skipIf(
+        os.getenv('HBNB_TYPE_STORAGE') == 'db',
+        "This test only work in Filestorage")
     def test_save_Place(self):
         """test if the save works"""
         self.place.save()

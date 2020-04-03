@@ -9,7 +9,6 @@ import pep8
 
 class TestReview(unittest.TestCase):
     """this will test the place class"""
-
     @classmethod
     def setUpClass(cls):
         """set up for test"""
@@ -59,6 +58,9 @@ class TestReview(unittest.TestCase):
         self.assertEqual(type(self.rev.place_id), str)
         self.assertEqual(type(self.rev.user_id), str)
 
+    @unittest.skipIf(
+        os.getenv('HBNB_TYPE_STORAGE') == 'db',
+        "This test only work in Filestorage")
     def test_save_Review(self):
         """test if the save works"""
         self.rev.save()

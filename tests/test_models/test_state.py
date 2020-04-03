@@ -9,7 +9,6 @@ import pep8
 
 class TestState(unittest.TestCase):
     """this will test the State class"""
-
     @classmethod
     def setUpClass(cls):
         """set up for test"""
@@ -53,6 +52,9 @@ class TestState(unittest.TestCase):
         """test attribute type for State"""
         self.assertEqual(type(self.state.name), str)
 
+    @unittest.skipIf(
+        os.getenv('HBNB_TYPE_STORAGE') == 'db',
+        "This test only work in Filestorage")
     def test_save_State(self):
         """test if the save works"""
         self.state.save()
