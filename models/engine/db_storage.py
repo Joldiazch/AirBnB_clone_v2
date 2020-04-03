@@ -43,7 +43,7 @@ class DBStorage:
     def all(self, cls=None):
         """ query on the current database session """
         a_dict = {}
-        classes = [User, State, City, Place, Review, Amenity]
+        classes = [User, State, City, Place, Review]
 
         if cls is None:
             for cl in classes:
