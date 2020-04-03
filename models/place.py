@@ -5,6 +5,8 @@ from sqlalchemy.orm import relationship, backref
 from sqlalchemy import Column, Integer, String, ForeignKey, Float
 from os import getenv
 from models.amenity import Amenity
+from models.amenity import Place
+
 
 type_storage = getenv('HBNB_TYPE_STORAGE')
 metadata = Base.metadata
@@ -37,7 +39,7 @@ class Place(BaseModel, Base):
             'place_id',
             String(60),
             primary_key=True,
-            ForeignKey('places.id'),
+            ForeignKey(Place.id),
             nullable=False
         ),
 
@@ -45,7 +47,7 @@ class Place(BaseModel, Base):
             'amenity_id',
             String(60),
             primary_key=True,
-            ForeignKey('amenities.id'),
+            ForeignKey(Amenity.id),
             nullable=False
         ),
     )
