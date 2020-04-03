@@ -5,6 +5,8 @@ from sqlalchemy.orm import relationship, backref
 from sqlalchemy import Column, Integer, String, ForeignKey, Float
 from os import getenv
 
+type_storage = getenv('HBNB_TYPE_STORAGE')
+
 
 class Place(BaseModel, Base):
     """This is the class for Place
@@ -34,7 +36,7 @@ class Place(BaseModel, Base):
     longitude = Column(Float)
     amenity_ids = []
     
-    if getenv("HBNB_TYPE_STORAGE") == 'db':
+    if type_storage == 'db':
         reviews = relationship(
             "Review",
             backref="place",
