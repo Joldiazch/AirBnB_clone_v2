@@ -36,6 +36,8 @@ class BaseModel:
                     setattr(self, key, value)
                 if key != "__class__":
                     setattr(self, key, value)
+                if "id" not in kwargs:
+                    self.id = str(uuid.uuid4())
         else:
             self.id = str(uuid.uuid4())
             self.created_at = self.updated_at = datetime.now()

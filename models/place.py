@@ -2,14 +2,12 @@
 """This is the place class"""
 from models.base_model import BaseModel, Base
 from sqlalchemy.orm import relationship, backref
-from sqlalchemy import Column, Integer, String, ForeignKey, Float
+from sqlalchemy import Column, Integer, String, ForeignKey, Float, Table
 from os import getenv
-from models.amenity import Amenity
-from models.amenity import Place
+import models
 
 
 type_storage = getenv('HBNB_TYPE_STORAGE')
-metadata = Base.metadata
 
 
 class Place(BaseModel, Base):
@@ -32,24 +30,25 @@ class Place(BaseModel, Base):
 
     amenity_ids = []
 
+    metadata = Base.metadata
+
     place_amenity = Table(
-        'place_amenity ',
+        'place_amenity',
         metadata,
         Column(
             'place_id',
             String(60),
+            ForeignKey('places.id'),
             primary_key=True,
-            ForeignKey(Place.id),
             nullable=False
         ),
-
         Column(
             'amenity_id',
             String(60),
+            ForeignKey('amenities.id'),
             primary_key=True,
-            ForeignKey(Amenity.id),
             nullable=False
-        ),
+        )
     )
 
     if type_storage == 'db':
@@ -75,11 +74,11 @@ class Place(BaseModel, Base):
         @property
         def amenities(self):
             """Getter"""
-            data = models.storage.all(Amenity)
+            data = models.storage.all(models.amenity.Amenity)
             return [obj for obj in data if obj.place_id == self.id]
 
         @amenities.setter
         def amenities(self, obj=None):
             """ setter method """
             if isinstance(obj, Amenity):
-                amenity_ids.append(obj.id)
+                self.amenity_ids.append(obj.amenities.id)
