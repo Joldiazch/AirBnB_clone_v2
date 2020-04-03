@@ -51,7 +51,7 @@ class DBStorage:
                     key = cl.__name__ + "." + instance.id
                     a_dict[key] = instance
         else:
-            for instance in self.__session.query(cls).all:
+            for instance in self.__session.query(cls).all():
                 key = cls.__name__ + "." + instance.id
                 a_dict[key] = instance
         return a_dict
