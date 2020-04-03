@@ -4,8 +4,6 @@ from models.base_model import BaseModel, Base
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy import Column, Integer, String, ForeignKey, Float
 
-type_storage = os.getenv('HBNB_TYPE_STORAGE')
-
 
 class Place(BaseModel, Base):
     """This is the class for Place
@@ -40,7 +38,7 @@ class Place(BaseModel, Base):
         backref="place",
         cascade="all, delete"
     )
-    
+
     @property
     def reviews(self):
         """Getter"""
