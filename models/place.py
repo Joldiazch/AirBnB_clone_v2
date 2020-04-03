@@ -35,7 +35,7 @@ class Place(BaseModel, Base):
     latitude = Column(Float)
     longitude = Column(Float)
     amenity_ids = []
-    
+
     if type_storage == 'db':
         reviews = relationship(
             "Review",
