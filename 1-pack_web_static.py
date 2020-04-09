@@ -11,7 +11,7 @@ def do_pack():
     """ generate a .tgz archive from the contents of the web_static folder """
 
     now = datetime.now().strftime("%Y%m%d%H%M%S")
-    folder = local("mkdir versions")
+    folder = local("mkdir -p versions")
     path = "versions/web_static_{}.tgz".format(now)
     files = local("tar -cvzf {} ./web_static".format(path))
     size_file = getsize(path)
