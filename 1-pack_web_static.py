@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 
-from fabric.api import local
+from fabric.api import *
+from fabric.decorators import runs_once
 from datetime import datetime
 from os.path import getsize
 
-
+@runs_once
 def do_pack():
     """ generate a .tgz archive from the contents of the web_static folder """
 
@@ -16,6 +17,6 @@ def do_pack():
     if folder.succeeded and files.succeeded:
         msg = "web_static packed: {} -> {}Bytes".format(path, size_file)
         print(msg)
-        return msg
+        return path
     print(None)
     return None
