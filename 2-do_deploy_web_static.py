@@ -41,19 +41,7 @@ def do_deploy(archive_path):
             "ln -sf {}/ /data/web_static/current".format(path_to_unpack)
         )
 
-        operations = [
-            upload,
-            mkdir,
-            unpackt_file,
-            rm_file,
-            move_files,
-            rm_old_webs,
-            delete_symb,
-            make_symb,
-        ]
-
-        print("New version deployed!")
-        return all([operation.succeeded for operation in operations])
+        return True
 
     else:
         return False
