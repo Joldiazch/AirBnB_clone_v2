@@ -20,7 +20,7 @@ def do_deploy(archive_path):
         name_file = archive_path.split('/')[-1].split('.')[0]
         path_to_unpack = "/data/web_static/releases/{}".format(name_file)
         unpack_command = "tar -xzf /tmp/{}.tgz -C {}"
-        mv_command = "mv -v {0}/web_static/* {0}/"
+        mv_command = "mv {0}/web_static/* {0}/"
         mkdir_command = "mkdir -p /data/web_static/releases/{}/"
 
         mkdir = sudo(mkdir_command.format(name_file))
@@ -41,6 +41,7 @@ def do_deploy(archive_path):
             "ln -sf {}/ /data/web_static/current".format(path_to_unpack)
         )
 
+        print("New version deployed!")
         return True
 
     else:
