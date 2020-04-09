@@ -19,7 +19,7 @@ def do_deploy(archive_path):
 
         name_file = archive_path.split('/')[-1].split('.')[0]
         path_to_unpack = "/data/web_static/releases/{}".format(name_file)
-        unpack_command = "tar -xzf /tmp/{}.tgz -C {}"
+        unpack_command = "tar -xzf /tmp/{}.tgz -C {}/"
         mv_command = "mv {0}/web_static/* {0}/"
         mkdir_command = "mkdir -p /data/web_static/releases/{}/"
 
@@ -32,7 +32,7 @@ def do_deploy(archive_path):
         move_files = sudo(mv_command.format(path_to_unpack))
 
         # delete old webstatic
-        rm_old_webs = sudo("rm -rf {0}/web_static".format(name_file))
+        rm_old_webs = sudo("rm -rf {0}/web_static".format(path_to_unpack))
 
         # delete symbolink link
         delete_symb = sudo("rm -rf /data/web_static/current")
