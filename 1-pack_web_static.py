@@ -5,6 +5,7 @@ from fabric.decorators import runs_once
 from datetime import datetime
 from os.path import getsize
 
+
 @runs_once
 def do_pack():
     """ generate a .tgz archive from the contents of the web_static folder """
