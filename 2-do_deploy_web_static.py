@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ first deploy """
 from fabric.api import *
-from datetime import datetime
 from os.path import getsize, isfile
 
 
@@ -15,34 +14,18 @@ def do_deploy(archive_path):
     """ distributes an archive to your web servers """
     if isfile(archive_path):
 
-        upload = put(archive_path, "/tmp/")
-
-        name_file = archive_path.split('/')[-1].split('.')[0]
-        path_to_unpack = "/data/web_static/releases/{}".format(name_file)
-        unpack_command = "tar -xzf /tmp/{}.tgz -C {}/"
-        mv_command = "mv {0}/web_static/* {0}/"
-        mkdir_command = "mkdir -p /data/web_static/releases/{}/"
-
-        mkdir = sudo(mkdir_command.format(name_file))
-
-        unpackt_file = sudo(unpack_command.format(name_file, path_to_unpack))
-
-        rm_file = sudo("rm /tmp/{}.tgz".format(name_file))
-
-        move_files = sudo(mv_command.format(path_to_unpack))
-
-        # delete old webstatic
-        rm_old_webs = sudo("rm -rf {0}/web_static".format(path_to_unpack))
-
-        # delete symbolink link
-        delete_symb = sudo("rm -rf /data/web_static/current")
-
-        make_symb = sudo(
-            "ln -sf {}/ /data/web_static/current".format(path_to_unpack)
-        )
-
-        print("New version deployed!")
-        return True
-
-    else:
-        return False
+        p1 = archive_path.split("/")
+        # ['versions', 'web_static_20170315003959.tgz']
+        p2 = p1[-1].split(".")
+        # ['web_static_20170315003959', 'tgz']
+        put(archive_path, "/tmp/")
+        sudo("mkdir -p /data/web_static/releases/{}/".format(p2[0]))
+        data = "/data/web_static/releases"
+        sudo("tar -xzf /tmp/{} -C {}/{}/".format(p1[-1], data, p2[0]))
+        sudo("rm /tmp/{}".format(p1[-1]))
+        path = "mv /data/web_static/releases"
+        path2 = "/data/web_static/releases"
+        sudo("{}/{}/web_static/* {}/{}/".format(path, p2[0], path2, p2[0]))
+        sudo("rm -rf {}/{}//web_static".format(path2, p2[0]))
+        sudo("rm -rf /data/web_static/current")
+        sudo("ln -s {}/{}/ /data/web_static/current".format(path2, p2[0]))
