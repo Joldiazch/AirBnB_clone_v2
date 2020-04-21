@@ -3,7 +3,7 @@
 from fabric.api import *
 from datetime import datetime
 from os.path import getsize, isfile
-
+from fabric.decorators import runs_once
 
 env.hosts = [
     '104.196.117.221',

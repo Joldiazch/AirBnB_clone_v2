@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+export IP_WEB_01=104.196.117.221
+export IP_WEB_02=54.221.125.45
+export IP_LB_01=54.204.68.217
