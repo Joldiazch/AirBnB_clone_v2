@@ -51,6 +51,8 @@ class DBStorage:
                     key = cl.__name__ + "." + instance.id
                     a_dict[key] = instance
         else:
+            if type(cls) is str:
+                cls = eval(cls)
             for instance in self.__session.query(cls).all():
                 key = cls.__name__ + "." + instance.id
                 a_dict[key] = instance

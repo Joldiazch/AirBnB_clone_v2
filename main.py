@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 """
  Test cities access from a state
 """
