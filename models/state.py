@@ -31,5 +31,5 @@ class State(BaseModel, Base):
             """ cities for a State instance """
             all_obj = models.storage.all(City)
             return [
-                city for city in all_obj.values() if city.state_id == self.id
+                c for c in all_obj.values() if c.state_id == self.id
             ]
