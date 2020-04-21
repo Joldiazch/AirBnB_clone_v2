@@ -16,10 +16,10 @@ class State(BaseModel, Base):
     Attributes:
         name: input name
     """
-    if models.type_storage == 'db':
-        __tablename__ = "states"
-        name = Column(String(128), nullable=False)
+    __tablename__ = "states"
+    name = Column(String(128), nullable=False)
 
+    if type_storage == 'db':
         cities = relationship(
             "City",
             backref='state',
@@ -29,7 +29,8 @@ class State(BaseModel, Base):
         @property
         def cities(self):
             """ cities for a State instance """
-            all_cities = models.storage.all(City)
+            all_obj = models.storage.all()
             return [
-                city for city in all_cities.values() if city.state_id == self.id
+                city for name_id, city in all_obj.items()
+                if 'City' in name_id and city.state_id == self.id
             ]
