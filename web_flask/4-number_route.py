@@ -6,6 +6,8 @@ from flask import Flask
 
 app = Flask(__name__)
 # strict_slashes allow that this route work with /my_route and /my_route/
+
+
 @app.route('/', strict_slashes=False)
 def root():
     """ return Hello HBNB """
