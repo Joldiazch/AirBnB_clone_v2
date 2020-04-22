@@ -11,8 +11,6 @@ import sys
 from sqlalchemy import (create_engine)
 from sqlalchemy.orm import sessionmaker, scoped_session
 import os
-
-
 """ load env variables """
 dev = os.getenv('HBNB_ENV')
 username = os.getenv('HBNB_MYSQL_USER')
@@ -32,9 +30,10 @@ class DBStorage:
     def __init__(self):
         """ Constructor """
         self.__engine = create_engine(
-            'mysql+mysqldb://{}:{}@localhost/{}'.format(
+            'mysql+mysqldb://{}:{}@{}/{}'.format(
                 username,
                 passw,
+                hostname,
                 datab),
             pool_pre_ping=True)
         if dev == 'test':
@@ -44,7 +43,6 @@ class DBStorage:
         """ query on the current database session """
         a_dict = {}
         classes = [User, State, City, Place, Review, Amenity]
-
         if cls is None:
             for cl in classes:
                 for instance in self.__session.query(cl).all():
@@ -83,5 +81,8 @@ class DBStorage:
         self.__session = Session()
 
     def close(self):
-        """ call to close """
+        """
+        call remove() method on the private
+        session attribute (self.__session)
+        """
         self.__session.close()

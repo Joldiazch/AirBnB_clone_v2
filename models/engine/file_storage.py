@@ -61,12 +61,12 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """ delete obj from __objects if it’s inside """
+        """ delete obj from __objects if it's inside """
         if obj:
             key_to_delete = "{}.{}".format(obj.__class__.__name__, obj.id)
             del (self.__objects[key_to_delete])
             self.save()
 
     def close(self):
-        """ call to reload """
+        """  deserializing the JSON file to objects """
         self.reload()
