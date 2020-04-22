@@ -18,8 +18,7 @@ def teardown_db(self):
 @app.route('/states', strict_slashes=False)
 def list_of_states(id=None):
     states = storage.all(State).values()
-    list_ids = [state.id for state in states]
-    if id in list_ids:
+    if id in [state.id for state in states]:
         states = [state for state in states if state.id == id]
     elif id != None:
         id = 'Not found'
@@ -27,7 +26,6 @@ def list_of_states(id=None):
         '9-states.html',
         states=states,
         id=id,
-        ids=list_ids,
     )
 
 
