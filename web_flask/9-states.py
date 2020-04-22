@@ -20,7 +20,7 @@ def list_of_states(id=None):
     states = storage.all(State).values()
     if id in [state.id for state in states]:
         states = [state for state in states if state.id == id]
-    elif id != None:
+    elif id is not None:
         id = 'Not found'
     return render_template(
         '9-states.html',
